@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abjjad.Images.API", "Abjjad.Images.API\Abjjad.Images.API.csproj", "{25C413EA-E92C-436E-A7A9-EDB8B2A3F0E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abjjad.Images", "Abjjad.Images\Abjjad.Images.csproj", "{019EA5AF-CD74-424B-8CD8-9B5FAB5BB80E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abjjad.Images.Core", "Abjjad.Images.Core\Abjjad.Images.Core.csproj", "{4FA30F3F-DCE0-4738-AF6A-130AC99B7C3C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25C413EA-E92C-436E-A7A9-EDB8B2A3F0E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25C413EA-E92C-436E-A7A9-EDB8B2A3F0E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25C413EA-E92C-436E-A7A9-EDB8B2A3F0E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25C413EA-E92C-436E-A7A9-EDB8B2A3F0E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{019EA5AF-CD74-424B-8CD8-9B5FAB5BB80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{019EA5AF-CD74-424B-8CD8-9B5FAB5BB80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{019EA5AF-CD74-424B-8CD8-9B5FAB5BB80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{019EA5AF-CD74-424B-8CD8-9B5FAB5BB80E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FA30F3F-DCE0-4738-AF6A-130AC99B7C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FA30F3F-DCE0-4738-AF6A-130AC99B7C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FA30F3F-DCE0-4738-AF6A-130AC99B7C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FA30F3F-DCE0-4738-AF6A-130AC99B7C3C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
