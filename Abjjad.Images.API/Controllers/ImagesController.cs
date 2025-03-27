@@ -28,25 +28,36 @@ public class ImagesController : ControllerBase
     [Consumes(REQUIRED_CONTENT_TYPE)]
     public async Task<IActionResult> Upload(UploadImagesModel model, CancellationToken cancellationToken)
     {
-        foreach (var image in model.Images)
+        var validationTasks = model.Images.Select(async image =>
         {
             if (image.Length > MAX_FILE_SIEZE)
             {
-                ModelState.AddModelError("Images", $"File '{image.FileName}' size is too large");
-                return BadRequest(ModelState);
+                return (false, $"File '{image.FileName}' size is too large");
             }
 
             if (!ALLOWED_CONTENT_TYPES.Contains(image.ContentType))
             {
-                ModelState.AddModelError("Images", $"File '{image.FileName}' type is not supported");
-                return BadRequest(ModelState);
+                return (false, $"File '{image.FileName}' type is not supported");
             }
 
             if (!ALLOWED_EXTENSIONS.Contains(Path.GetExtension(image.FileName).ToLower()))
             {
-                ModelState.AddModelError("Images", $"File '{image.FileName}' extension is not supported");
-                return BadRequest(ModelState);
+                return (false, $"File '{image.FileName}' extension is not supported");
             }
+
+            return (true, string.Empty);
+        });
+
+        var validationResults = await Task.WhenAll(validationTasks);
+        var invalidFiles = validationResults.Where(r => !r.Item1).ToList();
+        
+        if (invalidFiles.Any())
+        {
+            foreach (var (_, error) in invalidFiles)
+            {
+                ModelState.AddModelError("Images", error);
+            }
+            return BadRequest(ModelState);
         }
 
         var images = await _imagesManager.ResizeImagesAsync(model.Images, HttpContext.TraceIdentifier.Replace(":", "_"), cancellationToken);
