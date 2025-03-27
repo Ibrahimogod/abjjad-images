@@ -28,16 +28,22 @@ public class ImageProcessor
         var outputStream = new MemoryStream();
         using (var image = await Image.LoadAsync(imageStream, cancellationToken))
         {
-            image.Mutate(x => x.Resize(new ResizeOptions
-            {
-                Size = dimensions,
-                Mode = ResizeMode.Max
-            }));
+            image.Mutate(x => x
+                .Resize(new ResizeOptions
+                {
+                    Size = dimensions,
+                    Mode = ResizeMode.Max,
+                    Sampler = KnownResamplers.Lanczos3
+                })
+                .AutoOrient()
+            );
 
             await image.SaveAsync(outputStream, new WebpEncoder
             {
                 Quality = _imageProcessingOptions.Quality,
                 Method = (WebpEncodingMethod)_imageProcessingOptions.Method,
+                NearLossless = false,
+                SkipMetadata = true
             }, cancellationToken);
         }
 

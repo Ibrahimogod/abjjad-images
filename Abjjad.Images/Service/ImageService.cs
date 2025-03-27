@@ -24,18 +24,18 @@ public class ImageService
 
     public async Task<Guid> ResizeImageAsync(IFormFile file, string requestId, CancellationToken cancellationToken)
     {
-        // Process original image
-        using var originalStream = new MemoryStream();
-        await file.CopyToAsync(originalStream, cancellationToken);
-        originalStream.Position = 0;
-
         var enhancement = new Enhancement
         {
             Id = Guid.NewGuid(),
             RequestId = requestId,
         };
-        
-        // Store original
+
+        // Process original image and store it
+        using var originalStream = new MemoryStream();
+        await file.CopyToAsync(originalStream, cancellationToken);
+        originalStream.Position = 0;
+
+        // Store original image
         enhancement.OriginalImagePath = new ImagePath
         {
             Path = await _imageFileStorage.SaveAsync(
@@ -45,34 +45,45 @@ public class ImageService
                 cancellationToken),
             ContentType = file.ContentType
         };
-        var imageId = enhancement.Id;
-        // Process and store resized versions
+
+        // Process and store resized versions in parallel
         var resizeTasks = new[]
         {
-            ResizeImageAsync(requestId, imageId, originalStream, ImageSize.Phone, enhancement.ResizedImagePaths, cancellationToken),
-            ResizeImageAsync(requestId, imageId, originalStream, ImageSize.Tablet, enhancement.ResizedImagePaths, cancellationToken),
-            ResizeImageAsync(requestId, imageId, originalStream, ImageSize.Desktop, enhancement.ResizedImagePaths, cancellationToken)
+            ResizeImageAsync(requestId, enhancement.Id, originalStream, ImageSize.Phone, enhancement.ResizedImagePaths, cancellationToken),
+            ResizeImageAsync(requestId, enhancement.Id, originalStream, ImageSize.Tablet, enhancement.ResizedImagePaths, cancellationToken),
+            ResizeImageAsync(requestId, enhancement.Id, originalStream, ImageSize.Desktop, enhancement.ResizedImagePaths, cancellationToken)
         };
 
-        await Task.WhenAll(resizeTasks);
+        // Extract metadata in parallel with resizing
+        var metadataTask = _exifDataExtractor.ExtractExifDataAsync(originalStream, cancellationToken);
+
+        // Wait for all operations to complete
+        await Task.WhenAll(resizeTasks.Concat(new[] { metadataTask }));
         
-        // Extract and store metadata
-        enhancement.Metadata = await _exifDataExtractor.ExtractExifDataAsync(originalStream, cancellationToken);
-        
+        enhancement.Metadata = await metadataTask;
         _enhancementFileStorage.Add(enhancement);
             
-        return imageId;
+        return enhancement.Id;
     }
 
     private async Task ResizeImageAsync(string requestId, Guid imageId, MemoryStream originalStream, ImageSize imageSize, Dictionary<ImageSize, ImagePath> resizedImagePaths, CancellationToken cancellationToken)
     {
+        originalStream.Position = 0;
         var result = await _imageProcessor.ProcessImageAsync(originalStream, imageSize, cancellationToken);
-        var imagePath = await _imageFileStorage.SaveAsync(
-            directoryPath: requestId,
-            fileName: $"{imageId}_{imageSize}{result.Extension}",
-            stream: result.Stream,
-            cancellationToken);
-        resizedImagePaths.Add(imageSize, new ImagePath { Path = imagePath, ContentType = result.ContentType });
+        
+        try
+        {
+            var imagePath = await _imageFileStorage.SaveAsync(
+                directoryPath: requestId,
+                fileName: $"{imageId}_{imageSize}{result.Extension}",
+                stream: result.Stream,
+                cancellationToken);
+            resizedImagePaths.Add(imageSize, new ImagePath { Path = imagePath, ContentType = result.ContentType });
+        }
+        finally
+        {
+            result.Stream.Dispose();
+        }
     }
 
     public Enhancement? GetEnhancedImage(Guid id)
