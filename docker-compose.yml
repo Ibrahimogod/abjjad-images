@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Abjjad.Images.API/Dockerfile
+    ports:
+      - "7090:8080"
+    environment:
+      # ASP.NET Core environment
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      
+      # Logging configuration
+      - Logging__LogLevel__Default=Information
+      - Logging__LogLevel__Microsoft.AspNetCore=Warning
+      
+      # Storage configuration
+      - StorageOptions__BaseImagesPath=images
+      - StorageOptions__BaseFilesPath=files/data.json
+      
+      # Image processing configuration
+      - ImageProcessingOptions__Quality=80
+      - ImageProcessingOptions__Method=4
+      - ImageProcessingOptions__PhoneWidth=480
+      - ImageProcessingOptions__PhoneHeight=800
+      - ImageProcessingOptions__TabletWidth=1024
+      - ImageProcessingOptions__TabletHeight=768
+      - ImageProcessingOptions__DesktopWidth=1920
+      - ImageProcessingOptions__DesktopHeight=1080
+      
+      # Host configuration
+      - AllowedHosts=*
+    volumes:
+      - ./Abjjad.Images.API/wwwroot:/app/wwwroot
+    restart: unless-stopped 
