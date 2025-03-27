@@ -1,16 +1,16 @@
 ﻿using System.Text.Json;
 using Abjjad.Images.Core;
-using Microsoft.Extensions.Hosting;
 
 namespace Abjjad.Images.Storage;
 
-public class JsonFileStorage<TEntity, TId> : IDisposable, IAsyncDisposable, IHostedService
-    where TEntity : class, IEntity<TId>, new() where TId : notnull
+public class JsonFileStorage<TEntity, TId> : IDisposable, IAsyncDisposable, IJsonFileStorage<TEntity, TId> 
+    where TEntity : class, IEntity<TId>, new() 
+    where TId : notnull
 {
     private readonly string _filePath;
     private readonly Dictionary<TId, TEntity> _data = new();
     private bool _disposed;
-
+    
     public JsonFileStorage(string filePath)
     {
         _filePath = filePath;

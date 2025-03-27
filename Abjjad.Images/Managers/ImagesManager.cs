@@ -3,16 +3,14 @@ using Abjjad.Images.Core.Models;
 using Abjjad.Images.Models;
 using Abjjad.Images.Service;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
 
 namespace Abjjad.Images.Managers;
 
 public class ImagesManager
 {
-    private readonly ImageService _imageService;
-    private readonly IFileProvider _fileProvider;
+    private readonly IImageService _imageService;
     
-    public ImagesManager(ImageService imageService)
+    public ImagesManager(IImageService imageService)
     {
         _imageService = imageService;
     }

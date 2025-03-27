@@ -14,15 +14,15 @@ public static class FileStorageExtensions
     {
         return 
             services
-                .AddSingleton(sp =>
+                .AddSingleton(sp => 
                 {
                     IJsonFileStorageFactory<TEntity, TId> factory = sp.GetRequiredService<IJsonFileStorageFactory<TEntity, TId>>();
                     return factory.Create(sp.GetRequiredService<IOptions<StorageOptions>>().Value.BaseFilesPath);
                 })
-                .AddHostedService(sp => sp.GetRequiredService<JsonFileStorage<TEntity, TId>>());
+                .AddHostedService(sp => sp.GetRequiredService<IJsonFileStorage<TEntity, TId>>());
     }
 
-    public static IServiceCollection AddImageFileStorage(this IServiceCollection services) => services.AddSingleton(sp =>
+    public static IServiceCollection AddImageFileStorage(this IServiceCollection services) => services.AddSingleton<IImageFileStorage>(sp =>
     {
         IImageFileStorageFactory factory = sp.GetRequiredService<IImageFileStorageFactory>();
         var filePath = sp.GetRequiredService<IOptions<StorageOptions>>().Value.BaseImagesPath;

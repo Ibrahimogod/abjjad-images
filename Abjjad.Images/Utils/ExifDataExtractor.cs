@@ -3,7 +3,7 @@ using SixLabors.ImageSharp.Metadata.Profiles.Exif;
 
 namespace Abjjad.Images.Utils;
 
-public class ExifDataExtractor
+public class ExifDataExtractor : IExifDataExtractor
 {
     
     public async Task<Dictionary<string,string>> ExtractExifDataAsync(Stream imageStream, CancellationToken cancellationToken)
@@ -96,7 +96,7 @@ public class ExifDataExtractor
     //     }
     // }
 
-    private T GetExifValue<T>(ExifProfile profile, ExifTag<T> tag)
+    public T GetExifValue<T>(ExifProfile profile, ExifTag<T> tag)
     {
         if (profile.TryGetValue(tag, out var value) ) //&& value.Value != default
         {

@@ -8,7 +8,7 @@ using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Abjjad.Images.Utils;
 
-public class ImageProcessor
+public class ImageProcessor : IImageProcessor
 {
     private readonly ImageProcessingOptions _imageProcessingOptions;
 
@@ -56,7 +56,7 @@ public class ImageProcessor
         };
     }
 
-    private Size GetDimensionsForSize(ImageSize size) => size switch
+    public Size GetDimensionsForSize(ImageSize size) => size switch
     {
         ImageSize.Phone => new Size(_imageProcessingOptions.PhoneWidth, _imageProcessingOptions.PhoneHeight),
         ImageSize.Tablet => new Size(_imageProcessingOptions.TabletWidth, _imageProcessingOptions.TabletHeight),
