@@ -25,14 +25,14 @@ public static class Install
     public static IServiceCollection AddUtils(this IServiceCollection services)
     {
         return services
-            .AddSingleton<ExifDataExtractor>()
-            .AddSingleton<ImageProcessor>();
+            .AddSingleton<IExifDataExtractor,ExifDataExtractor>()
+            .AddSingleton<IImageProcessor, ImageProcessor>();
     }
 
     public static IServiceCollection AddService(this IServiceCollection services)
     {
        return services
-            .AddSingleton<ImageService>();
+            .AddSingleton<IImageService, ImageService>();
     }
 
     public static IServiceCollection AddManagers(this IServiceCollection services)

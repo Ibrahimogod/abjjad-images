@@ -1,6 +1,6 @@
 ﻿namespace Abjjad.Images.Storage;
 
-public class ImageFileStorage
+public class ImageFileStorage : IImageFileStorage
 {
     private readonly string _storagePath;
     

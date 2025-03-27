@@ -12,7 +12,7 @@ public class DefaultImageFileStorageFactory : IImageFileStorageFactory
         _webHostEnvironment = webHostEnvironment;
     }
     
-    public ImageFileStorage Create(string fileStoragePath)
+    public IImageFileStorage Create(string fileStoragePath)
     {
         var storagePath = Path.Combine(_webHostEnvironment.WebRootPath, fileStoragePath);
         return new ImageFileStorage(storagePath);

@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Http;
 
 namespace Abjjad.Images.Service;
 
-public class ImageService
+public class ImageService : IImageService
 {
 
-    private readonly ImageProcessor _imageProcessor;
-    private readonly ImageFileStorage _imageFileStorage;
-    private readonly ExifDataExtractor _exifDataExtractor;
-    private readonly JsonFileStorage<Enhancement, Guid> _enhancementFileStorage;
+    private readonly IImageProcessor _imageProcessor;
+    private readonly IImageFileStorage _imageFileStorage;
+    private readonly IExifDataExtractor _exifDataExtractor;
+    private readonly IJsonFileStorage<Enhancement, Guid> _enhancementFileStorage;
 
-    public ImageService(ImageFileStorage imageFileStorage, ExifDataExtractor exifDataExtractor, JsonFileStorage<Enhancement, Guid> enhancementFileStorage, ImageProcessor imageProcessor)
+    public ImageService(IImageFileStorage imageFileStorage, IExifDataExtractor exifDataExtractor, IJsonFileStorage<Enhancement, Guid> enhancementFileStorage, IImageProcessor imageProcessor)
     {
         _imageProcessor = imageProcessor;
         _imageFileStorage = imageFileStorage;

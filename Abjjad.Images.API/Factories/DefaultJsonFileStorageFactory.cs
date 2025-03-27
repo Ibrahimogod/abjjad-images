@@ -14,7 +14,7 @@ public class DefaultJsonFileStorageFactory<TEntity, TId> : IJsonFileStorageFacto
         _webHostEnvironment = webHostEnvironment;
     }
     
-    public JsonFileStorage<TEntity, TId> Create(string filePath)
+    public IJsonFileStorage<TEntity, TId> Create(string filePath)
     {
         var fileStoragePath = Path.Combine(_webHostEnvironment.WebRootPath, filePath);
         return new JsonFileStorage<TEntity, TId>(fileStoragePath);

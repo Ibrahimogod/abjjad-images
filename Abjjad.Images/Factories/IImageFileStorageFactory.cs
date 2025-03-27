@@ -4,5 +4,5 @@ namespace Abjjad.Images.Factories;
 
 public interface IImageFileStorageFactory
 {
-    ImageFileStorage Create(string fileStoragePath);
+    IImageFileStorage Create(string fileStoragePath);
 }
