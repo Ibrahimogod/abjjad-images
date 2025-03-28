@@ -5,11 +5,28 @@ This is the image processing API service for Abjjad platform.
 ## Prerequisites
 
 - Docker Desktop
-- Docker Compose
+- Docker Compose (optional)
 
 ## Getting Started
 
 ### Running with Docker
+
+You can run the application using the pre-built Docker image from GitHub Container Registry:
+
+1. Pull the latest image:
+```bash
+docker pull ghcr.io/ibrahimogod/abjjad-images-api:latest
+```
+
+2. Run the container:
+```bash
+docker run -d \
+  -p 7090:8080 \
+  -e ASPNETCORE_ENVIRONMENT=Production \
+  ghcr.io/ibrahimogod/abjjad-images-api:latest
+```
+
+Alternatively, you can build and run from source:
 
 1. Clone the repository:
 ```bash

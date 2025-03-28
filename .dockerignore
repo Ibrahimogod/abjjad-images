@@ -1,3 +1,9 @@
+# Rider
+.idea/
+
+**/wwwroot/files/**
+**/wwwroot/images/**
+
 # Git
 .git
 .gitignore
