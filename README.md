@@ -1,5 +1,7 @@
 # Abjjad Images API
 
+[![Build and Test](https://github.com/Ibrahimogod/abjjad-images/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/Ibrahimogod/abjjad-images/actions/workflows/build-and-test.yml)
+
 This is the image processing API service for Abjjad platform.
 
 ## Prerequisites
