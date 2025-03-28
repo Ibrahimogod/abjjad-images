@@ -5,21 +5,18 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Abjjad.Images.API.HealthChecks;
 using Abjjad.Images.Core.Models;
 using HealthChecks.UI.Client;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add health checks
 builder.Services.AddHealthChecks()
     .AddCheck<ImagesDirectoryHealthCheck>("images-directory")
     .AddCheck<DataFileHealthCheck>("data-file");
 
-// Add HealthCheck UI
 builder.Services.AddHealthChecksUI(options =>
 {
-    options.SetEvaluationTimeInSeconds(5); // Configures the UI to poll for health status every 5 seconds
-    options.MaximumHistoryEntriesPerEndpoint(50); // Maximum number of history entries to keep
-    options.SetApiMaxActiveRequests(1); // Only one active request at a time
+    options.SetEvaluationTimeInSeconds(5);
+    options.MaximumHistoryEntriesPerEndpoint(50);
+    options.SetApiMaxActiveRequests(1);
     options.AddHealthCheckEndpoint("Self", "/healthz");
 })
 .AddInMemoryStorage();

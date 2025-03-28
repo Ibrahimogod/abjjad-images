@@ -30,12 +30,10 @@ public class ImageService : IImageService
             RequestId = requestId,
         };
 
-        // Process original image and store it
         using var originalStream = new MemoryStream();
         await file.CopyToAsync(originalStream, cancellationToken);
         originalStream.Position = 0;
 
-        // Store original image
         enhancement.OriginalImagePath = new ImagePath
         {
             Path = await _imageFileStorage.SaveAsync(
@@ -46,7 +44,6 @@ public class ImageService : IImageService
             ContentType = file.ContentType
         };
 
-        // Process and store resized versions in parallel
         var resizeTasks = new[]
         {
             ResizeImageAsync(requestId, enhancement.Id, originalStream, ImageSize.Phone, enhancement.ResizedImagePaths, cancellationToken),
@@ -54,10 +51,8 @@ public class ImageService : IImageService
             ResizeImageAsync(requestId, enhancement.Id, originalStream, ImageSize.Desktop, enhancement.ResizedImagePaths, cancellationToken)
         };
 
-        // Extract metadata in parallel with resizing
         var metadataTask = _exifDataExtractor.ExtractExifDataAsync(originalStream, cancellationToken);
 
-        // Wait for all operations to complete
         await Task.WhenAll(resizeTasks.Concat(new[] { metadataTask }));
         
         enhancement.Metadata = await metadataTask;
