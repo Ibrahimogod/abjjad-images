@@ -47,6 +47,22 @@ The API documentation is available through Swagger UI when the application is ru
 - https://localhost:7091/swagger: 
 - http://localhost:7090/swagger
 
+## Health Checks
+
+The API includes built-in health checks to monitor the application's status. The following health check endpoints are available:
+
+- `/healthz` - Overall health status of the application
+- `/healthz/ready` - Readiness probe endpoint
+- `/healthz/live` - Liveness probe endpoint
+- `/healthz-ui` - Health check dashboard UI
+
+The health checks monitor:
+- Images directory accessibility
+- Data file accessibility
+
+The health check dashboard is available at:
+- http://localhost:7090/healthz-ui
+
 ## Project Structure
 
 - `Abjjad.Images.API/` - Main API project
