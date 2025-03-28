@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'Abjjad.Images/**'
+      - 'Abjjad.Images.API/**'
+      - 'Abjjad.Images.Core/**'
   workflow_dispatch:
     inputs:
       version:

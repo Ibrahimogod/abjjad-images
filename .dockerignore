@@ -45,6 +45,8 @@ _ReSharper*/
 # .NET Core
 project.lock.json
 project.fragment.lock.json
+appsettings.json
+appsettings.*.json
 artifacts/
 
 # Files built by Visual Studio
