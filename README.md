@@ -23,6 +23,16 @@ docker pull ghcr.io/ibrahimogod/abjjad-images-api:latest
 docker run -d \
   -p 7090:8080 \
   -e ASPNETCORE_ENVIRONMENT=Production \
+  -e StorageOptions__BaseImagesPath=images \
+  -e StorageOptions__BaseFilesPath=files/data.json \
+  -e ImageProcessingOptions__Quality=80 \
+  -e ImageProcessingOptions__Method=4 \
+  -e ImageProcessingOptions__PhoneWidth=480 \
+  -e ImageProcessingOptions__PhoneHeight=800 \
+  -e ImageProcessingOptions__TabletWidth=1024 \
+  -e ImageProcessingOptions__TabletHeight=768 \
+  -e ImageProcessingOptions__DesktopWidth=1920 \
+  -e ImageProcessingOptions__DesktopHeight=1080 \
   ghcr.io/ibrahimogod/abjjad-images-api:latest
 ```
 
