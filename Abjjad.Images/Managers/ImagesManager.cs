@@ -15,11 +15,11 @@ public class ImagesManager
         _imageService = imageService;
     }
 
-    public async Task<ImageUploadResponse> ResizeImagesAsync(IEnumerable<IFormFile> files, string requestId, CancellationToken cancellationToken)
+    public async Task<ImagesUploadResponse> ResizeImagesAsync(IEnumerable<IFormFile> files, string requestId, CancellationToken cancellationToken)
     {
         var tasks = files.Select(f => ResizeSingleImageAsync(f, requestId, cancellationToken));
         var results = await Task.WhenAll(tasks);
-        return new ImageUploadResponse { ImageIds = results };
+        return new ImagesUploadResponse { ImageIds = results };
     }
     
     private async Task<Guid> ResizeSingleImageAsync(IFormFile file, string requestId, CancellationToken cancellationToken)

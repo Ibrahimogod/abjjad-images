@@ -69,39 +69,4 @@ public class ExifDataExtractor : IExifDataExtractor
             return metadata;
         }
     }
-
-    // public ImageMetadata ExtractExifData(Stream imageStream)
-    // {
-    //     try
-    //     {
-    //         imageStream.Position = 0;
-    //         using var image = Image.Load(imageStream);
-    //         
-    //         if (image.Metadata.ExifProfile == null)
-    //         {
-    //             return new ImageMetadata();
-    //         }
-    //
-    //         return new ImageMetadata
-    //         {
-    //             Make = GetExifValue(image.Metadata.ExifProfile, ExifTag.Make),
-    //             Model = GetExifValue(image.Metadata.ExifProfile, ExifTag.Model),
-    //             Latitude = GetExifValue(image.Metadata.ExifProfile, ExifTag.GPSLatitudeRef),
-    //             Longitude = GetExifValue(image.Metadata.ExifProfile, ExifTag.GPSLongitudeRef),
-    //         };
-    //     }
-    //     catch
-    //     {
-    //         return new ImageMetadata();
-    //     }
-    // }
-
-    public T GetExifValue<T>(ExifProfile profile, ExifTag<T> tag)
-    {
-        if (profile.TryGetValue(tag, out var value) ) //&& value.Value != default
-        {
-            return value.Value;
-        }
-        return default;
-    }
 }

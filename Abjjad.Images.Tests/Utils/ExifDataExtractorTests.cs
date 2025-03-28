@@ -21,7 +21,6 @@ public class ExifDataExtractorTests
         using var imageStream = new MemoryStream();
         using (var image = new Image<Rgba32>(100, 100))
         {
-            // Add EXIF data
             var exifProfile = new ExifProfile();
             exifProfile.SetValue(ExifTag.Make, "TestMake");
             exifProfile.SetValue(ExifTag.Model, "TestModel");

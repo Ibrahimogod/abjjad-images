@@ -34,7 +34,6 @@ public class ImagesDirectoryHealthCheck : IHealthCheck
         
         try
         {
-            // Try to write a test file to verify write permissions
             var testFile = Path.Combine(imagesPath, ".healthcheck");
             await File.WriteAllTextAsync(testFile, DateTime.UtcNow.ToString(), cancellationToken);
             File.Delete(testFile);

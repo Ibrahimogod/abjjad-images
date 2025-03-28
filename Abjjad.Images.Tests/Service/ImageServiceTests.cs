@@ -39,7 +39,6 @@ public class ImageServiceTests
         var file = new Mock<IFormFile>();
         var requestId = "test-request-id";
         var cancellationToken = CancellationToken.None;
-        var enhancementId = Guid.NewGuid();
 
         // Setup mocks
         _imageFileStorageMock.Setup(x => x.SaveAsync(
