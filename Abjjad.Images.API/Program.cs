@@ -18,7 +18,9 @@ builder.Services.AddHealthChecksUI(options =>
     options.SetEvaluationTimeInSeconds(5);
     options.MaximumHistoryEntriesPerEndpoint(50);
     options.SetApiMaxActiveRequests(1);
-    options.AddHealthCheckEndpoint("Self", "/healthz");
+    //TODO: Make port host mapping dynamic
+    var port = builder.Configuration.GetValue<int>("ASPNETCORE_HTTP_PORTS");
+    options.AddHealthCheckEndpoint("Self", $"http://localhost:{port}/healthz");
 })
 .AddInMemoryStorage();
 
