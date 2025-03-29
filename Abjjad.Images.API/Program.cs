@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Abjjad.Images.API.HealthChecks;
 using Abjjad.Images.Core.Models;
 using HealthChecks.UI.Client;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,15 @@ builder.Services.AddHealthChecksUI(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => 
+{
+    c.SwaggerDoc("v1", new OpenApiInfo 
+    { 
+        Title = "Abjjad Images API", 
+        Version = "v1",
+        Description = "Image processing API service for Abjjad platform"
+    });
+});
 
 builder.Services
     .AddSingleton<IJsonFileStorageFactory<Enhancement, Guid>, DefaultJsonFileStorageFactory<Enhancement, Guid>>()

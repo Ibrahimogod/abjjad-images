@@ -106,7 +106,8 @@ public class ImagesController : ControllerBase
             var imagePath = _imagesManager.GetImagePath(id, imageSize);
             if (imagePath is null)
             {
-                return NotFound($"Image with ID {id} and size {imageSize} not found");
+                ModelState.AddModelError("Image", $"Image with ID {id} and size {imageSize} not found");
+                return NotFound(ModelState);
             }
             return PhysicalFile(imagePath.Path, imagePath.ContentType);
         }
@@ -128,7 +129,8 @@ public class ImagesController : ControllerBase
             var metadata = _imagesManager.GetMetadata(id);
             if (metadata is null)
             {
-                return NotFound($"Metadata for image with ID {id} not found");
+                ModelState.AddModelError("Metadata", $"Metadata for image with ID {id} not found");
+                return NotFound(ModelState);
             }
             return Ok(metadata);
         }

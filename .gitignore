@@ -8,6 +8,7 @@
 
 **/wwwroot/files/**
 **/wwwroot/images/**
+**/wwwroot/container/**
 
 # Common IntelliJ Platform excludes
 

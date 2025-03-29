@@ -10,8 +10,10 @@ COPY ["Abjjad.Images.API/Abjjad.Images.API.csproj", "Abjjad.Images.API/"]
 COPY ["Abjjad.Images/Abjjad.Images.csproj", "Abjjad.Images/"]
 RUN dotnet restore "Abjjad.Images.API/Abjjad.Images.API.csproj" --runtime linux-musl-x64
 
-# Copy all files and build
-COPY . .
+# Copy source code and build
+COPY ["Abjjad.Images.API/", "Abjjad.Images.API/"]
+COPY ["Abjjad.Images/", "Abjjad.Images/"]
+COPY ["Abjjad.Images.Core/", "Abjjad.Images.Core/"]
 RUN dotnet build "Abjjad.Images.API/Abjjad.Images.API.csproj" -c Release -o /app/build --runtime linux-musl-x64
 
 # Publish stage
