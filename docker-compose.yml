@@ -33,5 +33,5 @@ services:
       # Host configuration
       - AllowedHosts=*
     volumes:
-      - ./Abjjad.Images.API/wwwroot:/app/wwwroot
+      - ./Abjjad.Images.API/wwwroot/container:/app/wwwroot
     restart: unless-stopped 

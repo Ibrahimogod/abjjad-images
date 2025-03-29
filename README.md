@@ -35,6 +35,7 @@ docker run -d \
   -e ImageProcessingOptions__TabletHeight=768 \
   -e ImageProcessingOptions__DesktopWidth=1920 \
   -e ImageProcessingOptions__DesktopHeight=1080 \
+  -v /wwwroot/container:/app/wwwroot \
   ghcr.io/ibrahimogod/abjjad-images-api:latest
 ```
 
