@@ -3,6 +3,7 @@ using Abjjad.Images.Factories;
 using Abjjad.Images.API.Factories;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Abjjad.Images.API.HealthChecks;
+using Abjjad.Images.API.Middleware;
 using Abjjad.Images.Core.Models;
 using HealthChecks.UI.Client;
 using Microsoft.OpenApi.Models;
@@ -44,6 +45,9 @@ builder.Services.AddAbjjadImagesServices(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
+
 app.MapHealthChecks("/healthz", new HealthCheckOptions
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
@@ -73,4 +77,4 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
