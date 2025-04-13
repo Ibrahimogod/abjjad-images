@@ -1,5 +1,5 @@
-using Abjjad.Images.Storage;
 using Abjjad.Images.Core;
+using Abjjad.Images.Storage;
 
 namespace Abjjad.Images.Tests.Storage;
 
@@ -35,7 +35,7 @@ public class JsonFileStorageTests : IDisposable
     public void Constructor_NullDirectoryPath_ThrowsArgumentNullException()
     {
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new JsonFileStorage<TestEntity, Guid>(null));
+        Assert.Throws<ArgumentNullException>(() => new JsonFileStorage<TestEntity, Guid>(null!));
     }
 
     [Fact]

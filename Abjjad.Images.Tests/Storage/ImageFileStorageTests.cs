@@ -40,7 +40,7 @@ public class ImageFileStorageTests : IDisposable
         Assert.True(File.Exists(result));
         Assert.Equal(Path.Combine(_testStoragePath, directoryPath, fileName), result);
         
-        var savedContent = await File.ReadAllTextAsync(result);
+        var savedContent = await File.ReadAllTextAsync(result, cancellationToken);
         Assert.Equal(content, savedContent);
     }
 
@@ -76,7 +76,7 @@ public class ImageFileStorageTests : IDisposable
         var result = await _imageFileStorage.SaveAsync(directoryPath, fileName, stream, cancellationToken);
 
         // Assert
-        var savedContent = await File.ReadAllTextAsync(result);
+        var savedContent = await File.ReadAllTextAsync(result, cancellationToken);
         Assert.Equal(content, savedContent);
     }
 
@@ -85,11 +85,11 @@ public class ImageFileStorageTests : IDisposable
     {
         // Arrange
         var fileName = "test-image.jpg";
-        using var stream = new MemoryStream(Encoding.UTF8.GetBytes("Test content"));
+        using var stream = new MemoryStream("Test content"u8.ToArray());
         var cancellationToken = CancellationToken.None;
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentNullException>(async () => 
-            await _imageFileStorage.SaveAsync(null, fileName, stream, cancellationToken));
+            await _imageFileStorage.SaveAsync(null!, fileName, stream, cancellationToken));
     }
 }

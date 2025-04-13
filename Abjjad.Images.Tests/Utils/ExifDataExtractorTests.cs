@@ -93,10 +93,10 @@ public class ExifDataExtractorTests
         using (var image = new Image<Rgba32>(100, 100))
         {
             var exifProfile = new ExifProfile();
-            exifProfile.SetValue(ExifTag.Make, null);
-            exifProfile.SetValue(ExifTag.Model, null);
+            exifProfile.SetValue(ExifTag.Make!, null);
+            exifProfile.SetValue(ExifTag.Model!, null);
             image.Metadata.ExifProfile = exifProfile;
-            image.SaveAsJpeg(imageStream);
+            await image.SaveAsJpegAsync(imageStream);
         }
         imageStream.Position = 0;
         var cancellationToken = CancellationToken.None;
