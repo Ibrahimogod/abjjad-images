@@ -13,6 +13,7 @@ public class ImageFileStorage : IImageFileStorage
     {
         var filePath = Path.Combine(_storagePath, directoryPath, fileName);
         var directory = Path.GetDirectoryName(filePath);
+        if (string.IsNullOrEmpty(directory)) throw new ArgumentNullException(nameof(directory));
         if (!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);

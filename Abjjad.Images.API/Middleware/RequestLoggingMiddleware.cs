@@ -31,7 +31,7 @@ public class RequestLoggingMiddleware
                 context.Request.Path,
                 context.Response.StatusCode,
                 stopwatch.ElapsedMilliseconds,
-                correlationId);
+                correlationId ?? "N/A");
         }
         catch (Exception ex)
         {
@@ -47,4 +47,4 @@ public class RequestLoggingMiddleware
             throw;
         }
     }
-} 
+}

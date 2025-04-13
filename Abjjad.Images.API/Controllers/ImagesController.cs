@@ -4,6 +4,7 @@ using Abjjad.Images.API.Models;
 using Abjjad.Images.Core.Enums;
 using Abjjad.Images.Core.Models;
 using Abjjad.Images.Models;
+using Abjjad.Images.Utils;
 
 namespace Abjjad.Images.API.Controllers;
 
@@ -12,22 +13,22 @@ namespace Abjjad.Images.API.Controllers;
 public class ImagesController : ControllerBase
 {
     private const string REQUIRED_CONTENT_TYPE = "multipart/form-data";
-    private const int MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
-    private readonly string[] ALLOWED_CONTENT_TYPES = { "image/jpg", "image/jpeg", "image/png", "image/webp" };
-    private readonly string[] ALLOWED_EXTENSIONS = { ".jpg", ".jpeg", ".png", ".webp" };
     
-    private readonly ImagesManager _imagesManager;
+    private readonly IImagesManager _imagesManager;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly ILogger<ImagesController> _logger;
+    private readonly IImageValidator _imageValidator;
 
     public ImagesController(
-        ImagesManager imagesManager, 
+        IImagesManager imagesManager, 
         IWebHostEnvironment webHostEnvironment,
-        ILogger<ImagesController> logger)
+        ILogger<ImagesController> logger,
+        IImageValidator imageValidator)
     {
         _imagesManager = imagesManager;
         _webHostEnvironment = webHostEnvironment;
         _logger = logger;
+        _imageValidator = imageValidator;
     }
     
     [HttpPost]
@@ -45,32 +46,10 @@ public class ImagesController : ControllerBase
                 return BadRequest(ModelState);
             }
 
-            var validationTasks = model.Images.Select(async image =>
+            var validationResults = _imageValidator.ValidateImages(model.Images);
+            if (validationResults.Any())
             {
-                if (image.Length > MAX_FILE_SIZE)
-                {
-                    return (false, $"File '{image.FileName}' size is too large. Maximum size is 2MB");
-                }
-
-                if (!ALLOWED_CONTENT_TYPES.Contains(image.ContentType))
-                {
-                    return (false, $"File '{image.FileName}' type is not supported. Supported types are: {string.Join(", ", ALLOWED_CONTENT_TYPES)}");
-                }
-
-                if (!ALLOWED_EXTENSIONS.Contains(Path.GetExtension(image.FileName).ToLower()))
-                {
-                    return (false, $"File '{image.FileName}' extension is not supported. Supported extensions are: {string.Join(", ", ALLOWED_EXTENSIONS)}");
-                }
-
-                return (true, string.Empty);
-            });
-
-            var validationResults = await Task.WhenAll(validationTasks);
-            var invalidFiles = validationResults.Where(r => !r.Item1).ToList();
-            
-            if (invalidFiles.Any())
-            {
-                foreach (var (_, error) in invalidFiles)
+                foreach (var error in validationResults)
                 {
                     ModelState.AddModelError("Images", error);
                 }

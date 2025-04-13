@@ -32,6 +32,13 @@ public class JsonFileStorageTests : IDisposable
     }
 
     [Fact]
+    public void Constructor_NullDirectoryPath_ThrowsArgumentNullException()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => new JsonFileStorage<TestEntity, Guid>(null));
+    }
+
+    [Fact]
     public void Add_NewEntity_AddsToStorage()
     {
         // Arrange
@@ -124,4 +131,4 @@ public class JsonFileStorageTests : IDisposable
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
-} 
+}

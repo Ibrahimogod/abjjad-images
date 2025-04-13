@@ -18,4 +18,12 @@
       <PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
     </ItemGroup>
     
+    <ItemGroup>
+        <InternalsVisibleTo Include="Abjjad.Images.Tests" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\files\data.json" />
+    </ItemGroup>
+    
 </Project>

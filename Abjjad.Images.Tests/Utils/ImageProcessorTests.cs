@@ -10,12 +10,11 @@ namespace Abjjad.Images.Tests.Utils;
 
 public class ImageProcessorTests
 {
-    private readonly ImageProcessingOptions _options;
     private readonly ImageProcessor _imageProcessor;
 
     public ImageProcessorTests()
     {
-        _options = new ImageProcessingOptions
+        var options = new ImageProcessingOptions
         {
             PhoneWidth = 800,
             PhoneHeight = 600,
@@ -28,7 +27,7 @@ public class ImageProcessorTests
         };
 
         var optionsMock = new Mock<IOptions<ImageProcessingOptions>>();
-        optionsMock.Setup(o => o.Value).Returns(_options);
+        optionsMock.Setup(o => o.Value).Returns(options);
 
         _imageProcessor = new ImageProcessor(optionsMock.Object);
     }
@@ -40,7 +39,7 @@ public class ImageProcessorTests
         using var imageStream = new MemoryStream();
         using (var image = new Image<Rgba32>(100, 100))
         {
-            image.SaveAsWebp(imageStream);
+            await image.SaveAsWebpAsync(imageStream);
         }
         imageStream.Position = 0;
         var size = ImageSize.Phone;

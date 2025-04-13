@@ -18,46 +18,46 @@ public class ExifDataExtractor : IExifDataExtractor
                 return metadata;
             }
 
-            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.Make, out var make))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.Make, out var make) && make?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.Make), make.Value);
             }
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.Model, out var model))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.Model, out var model) && model?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.Model), model.Value);
             }
             
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.DateTime, out var dateTime))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.DateTime, out var dateTime) && dateTime?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.DateTime), dateTime.Value);
             }
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.DateTimeOriginal, out var dateTimeOriginal))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.DateTimeOriginal, out var dateTimeOriginal) && dateTimeOriginal?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.DateTimeOriginal), dateTimeOriginal.Value);
             }
             
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLatitudeRef, out var latitudeRef))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLatitudeRef, out var latitudeRef) && latitudeRef?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.GPSLatitudeRef), latitudeRef.Value);
             }
-            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLatitude, out var latitude))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLatitude, out var latitude) && latitude?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.GPSLatitude), latitude.Value.ToString());
             }
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSDestLatitudeRef, out var destLatitudeRef))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSDestLatitudeRef, out var destLatitudeRef) && destLatitudeRef?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.GPSDestLatitudeRef), destLatitudeRef.Value);
             }
             
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLongitudeRef, out var longitudeRef))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLongitudeRef, out var longitudeRef) && longitudeRef?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.GPSLongitudeRef), longitudeRef.Value);
             }
-            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLongitude, out var longitude))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSLongitude, out var longitude) && longitude?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.GPSLongitude), longitude.Value.ToString());
             }
-            if(image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSDestLongitudeRef, out var destLongitudeRef))
+            if (image.Metadata.ExifProfile.TryGetValue(ExifTag.GPSDestLongitudeRef, out var destLongitudeRef) && destLongitudeRef?.Value != null)
             {
                 metadata.Add(nameof(ExifTag.GPSDestLongitudeRef), destLongitudeRef.Value);
             }

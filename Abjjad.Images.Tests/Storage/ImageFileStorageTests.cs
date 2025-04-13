@@ -79,4 +79,17 @@ public class ImageFileStorageTests : IDisposable
         var savedContent = await File.ReadAllTextAsync(result);
         Assert.Equal(content, savedContent);
     }
-} 
+
+    [Fact]
+    public async Task SaveAsync_NullDirectoryPath_ThrowsArgumentNullException()
+    {
+        // Arrange
+        var fileName = "test-image.jpg";
+        using var stream = new MemoryStream(Encoding.UTF8.GetBytes("Test content"));
+        var cancellationToken = CancellationToken.None;
+
+        // Act & Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(async () => 
+            await _imageFileStorage.SaveAsync(null, fileName, stream, cancellationToken));
+    }
+}
