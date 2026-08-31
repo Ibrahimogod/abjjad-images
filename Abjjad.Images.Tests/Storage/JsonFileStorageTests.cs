@@ -1,5 +1,5 @@
-using Abjjad.Images.Storage;
 using Abjjad.Images.Core;
+using Abjjad.Images.Storage;
 
 namespace Abjjad.Images.Tests.Storage;
 
@@ -29,6 +29,13 @@ public class JsonFileStorageTests : IDisposable
         Assert.True(File.Exists(_testFilePath));
         var content = File.ReadAllText(_testFilePath);
         Assert.Equal("[]", content);
+    }
+
+    [Fact]
+    public void Constructor_NullDirectoryPath_ThrowsArgumentNullException()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => new JsonFileStorage<TestEntity, Guid>(null!));
     }
 
     [Fact]
@@ -124,4 +131,4 @@ public class JsonFileStorageTests : IDisposable
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
     }
-} 
+}

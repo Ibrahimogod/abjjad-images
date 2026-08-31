@@ -26,7 +26,8 @@ public static class Install
     {
         return services
             .AddSingleton<IExifDataExtractor,ExifDataExtractor>()
-            .AddSingleton<IImageProcessor, ImageProcessor>();
+            .AddSingleton<IImageProcessor, ImageProcessor>()
+            .AddSingleton<IImageValidator, ImageValidator>();
     }
 
     public static IServiceCollection AddService(this IServiceCollection services)
@@ -38,13 +39,14 @@ public static class Install
     public static IServiceCollection AddManagers(this IServiceCollection services)
     {
         return services
-            .AddSingleton<ImagesManager>();
+            .AddSingleton<IImagesManager,ImagesManager>();
     }
 
     public static IServiceCollection AddOptions(this IServiceCollection services, IConfiguration configuration)
     {
        return services
             .Configure<StorageOptions>(configuration.GetSection(nameof(StorageOptions)))
-            .Configure<ImageProcessingOptions>(configuration.GetSection(nameof(ImageProcessingOptions)));
+            .Configure<ImageProcessingOptions>(configuration.GetSection(nameof(ImageProcessingOptions)))
+            .Configure<ValidationOptions>(configuration.GetSection(nameof(ValidationOptions)));
     }
 }

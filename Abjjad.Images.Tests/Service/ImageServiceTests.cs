@@ -40,7 +40,6 @@ public class ImageServiceTests
         var requestId = "test-request-id";
         var cancellationToken = CancellationToken.None;
 
-        // Setup mocks
         _imageFileStorageMock.Setup(x => x.SaveAsync(
             It.IsAny<string>(),
             It.IsAny<string>(),

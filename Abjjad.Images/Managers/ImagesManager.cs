@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Abjjad.Images.Managers;
 
-public class ImagesManager
+public class ImagesManager : IImagesManager
 {
     private readonly IImageService _imageService;
     

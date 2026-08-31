@@ -23,6 +23,7 @@ public class JsonFileStorage<TEntity, TId> : IDisposable, IAsyncDisposable, IJso
         var directory = Path.GetDirectoryName(_filePath);
         if (!Directory.Exists(directory))
         {
+            if (string.IsNullOrEmpty(directory)) throw new ArgumentNullException(nameof(directory));
             Directory.CreateDirectory(directory);
         }
         

@@ -84,4 +84,28 @@ public class ExifDataExtractorTests
         Assert.NotNull(result);
         Assert.Empty(result);
     }
-} 
+
+    [Fact]
+    public async Task ExtractExifDataAsync_NullValuesInExifProfile_DoesNotThrow()
+    {
+        // Arrange
+        using var imageStream = new MemoryStream();
+        using (var image = new Image<Rgba32>(100, 100))
+        {
+            var exifProfile = new ExifProfile();
+            exifProfile.SetValue(ExifTag.Make!, null);
+            exifProfile.SetValue(ExifTag.Model!, null);
+            image.Metadata.ExifProfile = exifProfile;
+            await image.SaveAsJpegAsync(imageStream);
+        }
+        imageStream.Position = 0;
+        var cancellationToken = CancellationToken.None;
+
+        // Act
+        var result = await _exifDataExtractor.ExtractExifDataAsync(imageStream, cancellationToken);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Empty(result);
+    }
+}
